@@ -84,16 +84,22 @@ process.output = cms.OutputModule( "PoolOutputModule", fileName = cms.untracked.
         dataTier = cms.untracked.string( "RAW" )
     ),
     SelectEvents = cms.untracked.PSet(  SelectEvents = cms.vstring( 'PartialRawRepackers' ) ),
-    outputCommands = cms.untracked.vstring( 'keep *')
+    outputCommands = cms.untracked.vstring( 'drop *',
+      'keep FEDRawDataCollection_*_*_*',
+      'keep *_siPixelDigis_*_*')
 )
+
+process.load('Configuration.StandardSequences.RawToDigi_Data_cff')
+process.raw2digi_step = cms.Path(process.RawToDigi)
+
 process.PartialRawRepackers = cms.Path(process.partialRawDataRepackerPixel 
                                        + process.partialRawDataRepackerECAL
                                        + process.partialRawDataRepackerES 
-                                       + process.partialRawDataRepackerHCAL # Crashing 
+                                    #    + process.partialRawDataRepackerHCAL # Crashing 
                                        + process.partialRawDataRepackerStrips 
                                        + process.partialRawDataRepackerMuons 
                                        + process.partialRawDataRepackerOther)
 process.PartialRawOutput = cms.FinalPath(process.output)
 
-process.schedule = cms.Schedule( *(  process.PartialRawRepackers,process.PartialRawOutput, ))
+process.schedule = cms.Schedule( *(  process.raw2digi_step,process.PartialRawRepackers,process.PartialRawOutput, ))
 
