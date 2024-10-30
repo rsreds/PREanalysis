@@ -8,6 +8,7 @@ import FWCore.ParameterSet.Config as cms
 
 from Configuration.Eras.Era_Run3_cff import Run3
 
+
 detector = sys.argv[1]
 process = cms.Process( "HLTX", Run3 )
 
