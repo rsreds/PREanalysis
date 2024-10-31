@@ -3,8 +3,8 @@
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
 # with command line options: step3 --conditions auto:run3_data_prompt_relval -s RAW2DIGI --datatier DIGI --eventcontent RECO --data --process reRECO --scenario pp --era Run3 --customise Configuration/DataProcessing/RecoTLR.customisePostEra_Run3 -n 100 --filein /store/data/Run2024F/Muon0/RAW-RECO/ZMu-PromptReco-v1/000/382/216/00000/aadd1ab9-4eb8-4fb2-ac62-bdd1bebe882e.root
+from importFED import FEDexclude,FEDinclude 
 import FWCore.ParameterSet.Config as cms
-
 from Configuration.Eras.Era_Run3_cff import Run3
 
 process = cms.Process('reRECO',Run3)
@@ -27,8 +27,11 @@ process.maxEvents = cms.untracked.PSet(
 
 # Input source
 process.source = cms.Source("PoolSource",
-    fileNames = cms.untracked.vstring('/store/data/Run2024F/Muon0/RAW-RECO/ZMu-PromptReco-v1/000/382/216/00000/aadd1ab9-4eb8-4fb2-ac62-bdd1bebe882e.root'),
-    secondaryFileNames = cms.untracked.vstring()
+    secondaryFileNames = cms.untracked.vstring('/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-DIGI-RAW-HLTDEBUG/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/6886a037-5bea-4b34-9365-9162552694b7.root',
+                                      '/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-DIGI-RAW-HLTDEBUG/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/6e6a801b-3be3-4cf4-9964-ef8fe3b25506.root',
+                                      '/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-DIGI-RAW-HLTDEBUG/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/c088c4b4-1ac0-4e6d-a8ff-43187dfe26d0.root'),
+    fileNames = cms.untracked.vstring('/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-RECO/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/59f0803f-b748-4bd7-ac3e-df2087512590.root',
+                                               '/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-RECO/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/d5761040-3e83-4987-8f59-01b1af2f0399.root')
 )
 
 process.options = cms.untracked.PSet(
@@ -70,31 +73,88 @@ process.configurationMetadata = cms.untracked.PSet(
     version = cms.untracked.string('$Revision: 1.19 $')
 )
 
-# Output definition
+# Pixel, ECAL, ES, HCAL, Strips, Muons, Other
+pixel_fed_list = (cms.vuint32(tuple(FEDinclude("Pixel"))))
+ecal_fed_list = (cms.vuint32(tuple(FEDinclude("ECAL"))))
+es_fed_list = (cms.vuint32(tuple(FEDinclude("ES"))))
+hcal_fed_list = (cms.vuint32(tuple(FEDinclude("HCAL"))))
+strips_fed_list = (cms.vuint32(tuple(FEDinclude("Strips"))))
+muons_fed_list = (cms.vuint32(tuple(FEDinclude("Muons"))))
+other_fed_list = (cms.vuint32(tuple(FEDinclude("Other"))))
 
+process.partialRawDataRepackerPixel = cms.EDProducer( "EvFFEDSelector",
+    inputTag = cms.InputTag( "rawDataCollector" ),
+    fedList = pixel_fed_list
+)
+process.partialRawDataRepackerECAL = cms.EDProducer( "EvFFEDSelector",
+    inputTag = cms.InputTag( "rawDataCollector" ),
+    fedList = ecal_fed_list
+)
+process.partialRawDataRepackerES = cms.EDProducer( "EvFFEDSelector",
+    inputTag = cms.InputTag( "rawDataCollector" ),
+    fedList = es_fed_list
+)
+process.partialRawDataRepackerHCAL = cms.EDProducer( "EvFFEDSelector",
+    inputTag = cms.InputTag( "rawDataCollector" ),
+    fedList = hcal_fed_list
+)
+process.partialRawDataRepackerStrips = cms.EDProducer( "EvFFEDSelector",
+    inputTag = cms.InputTag( "rawDataCollector" ),
+    fedList = strips_fed_list
+)
+process.partialRawDataRepackerMuons = cms.EDProducer( "EvFFEDSelector",
+    inputTag = cms.InputTag( "rawDataCollector" ),
+    fedList = muons_fed_list
+)
+process.partialRawDataRepackerOther = cms.EDProducer( "EvFFEDSelector",
+    inputTag = cms.InputTag( "rawDataCollector" ),
+    fedList = other_fed_list
+)
+
+# Output definition
 process.RECOoutput = cms.OutputModule("PoolOutputModule",
     dataset = cms.untracked.PSet(
         dataTier = cms.untracked.string('DIGI'),
         filterName = cms.untracked.string('')
     ),
-    fileName = cms.untracked.string('step3_RAW2DIGI.root'),
-    outputCommands = process.RECOEventContent.outputCommands,
-    splitLevel = cms.untracked.int32(0)
+    fileName = cms.untracked.string('step3_Raw2Digi_PartialRaw.root'),
+    SelectEvents = cms.untracked.PSet(  SelectEvents = cms.vstring( 'partialrawrepackers_step' ) ),
+    outputCommands = cms.untracked.vstring(
+            'drop *',
+            'keep FEDRawDataCollection_*_*_*',
+            'keep *_siStripDigis_*_*',
+            'keep *_siPixelDigis_*_*',
+            'keep *_ecalDigis_*_*',
+            'keep *_hcalDigis_*_*',
+            'keep *_simHcalDigis_*_*',
+            'keep *_simEcalDigis_*_*',
+            'keep *_simSiStripDigis_*_*',
+            'keep *_simSiPixelDigis_*_*',
+            'drop *_*_*_RECO'
+      )
+    # splitLevel = cms.untracked.int32(0)
 )
 
 # Additional output definition
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, globaltag = '140X_dataRun3_Prompt_v4')
+process.GlobalTag = GlobalTag(process.GlobalTag, globaltag = '141X_mcRun3_2024_realistic_HI_v5')
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
+process.partialrawrepackers_step = cms.Path(process.partialRawDataRepackerPixel 
+                                       + process.partialRawDataRepackerECAL
+                                       + process.partialRawDataRepackerES 
+                                    #    + process.partialRawDataRepackerHCAL # Crashing 
+                                       + process.partialRawDataRepackerStrips 
+                                       + process.partialRawDataRepackerMuons 
+                                       + process.partialRawDataRepackerOther)
 process.endjob_step = cms.EndPath(process.endOfProcess)
-process.RECOoutput_step = cms.EndPath(process.RECOoutput)
+process.output_step = cms.EndPath(process.RECOoutput)
 
 # Schedule definition
-process.schedule = cms.Schedule(process.raw2digi_step,process.endjob_step,process.RECOoutput_step)
+process.schedule = cms.Schedule(process.raw2digi_step,process.partialrawrepackers_step,process.endjob_step,process.output_step)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 

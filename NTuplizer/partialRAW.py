@@ -43,7 +43,7 @@ process.options = cms.untracked.PSet(
 
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 from Configuration.AlCa.GlobalTag import GlobalTag as customiseGlobalTag
-process.GlobalTag = customiseGlobalTag(process.GlobalTag, globaltag = '140X_dataRun3_HLT_v3')
+process.GlobalTag = customiseGlobalTag(process.GlobalTag, globaltag = '141X_mcRun3_2024_realistic_HI_v5')
 
 import HLTrigger.HLTfilters.hltHighLevel_cfi as hlt
 process.hltFilter = hlt.hltHighLevel.clone(
@@ -52,15 +52,12 @@ process.hltFilter = hlt.hltHighLevel.clone(
 )
 
 # source module (EDM inputs)
-process.source = cms.Source( "PoolSource",
-    fileNames = cms.untracked.vstring(
-        '/store/data/Run2024F/Muon0/RAW-RECO/ZMu-PromptReco-v1/000/382/216/00000/aadd1ab9-4eb8-4fb2-ac62-bdd1bebe882e.root'
-        #'/store/data/Run2024F/EphemeralHLTPhysics1/RAW/v1/000/382/250/00000/005365a4-1194-48b8-a3c3-8da53a6a5dd5.root',
-    ),
-    # inputCommands = cms.untracked.vstring(
-    #     'drop *_*_*_RECO', 
-    #     'keep FEDRawDataCollection_*_*_*'
-    # )
+process.source = cms.Source("PoolSource",
+    secondaryFileNames = cms.untracked.vstring('/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-DIGI-RAW-HLTDEBUG/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/6886a037-5bea-4b34-9365-9162552694b7.root',
+                                      '/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-DIGI-RAW-HLTDEBUG/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/6e6a801b-3be3-4cf4-9964-ef8fe3b25506.root',
+                                      '/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-DIGI-RAW-HLTDEBUG/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/c088c4b4-1ac0-4e6d-a8ff-43187dfe26d0.root'),
+    fileNames = cms.untracked.vstring('/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-RECO/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/59f0803f-b748-4bd7-ac3e-df2087512590.root',
+                                               '/store/relval/CMSSW_14_2_0_pre2/RelValQCD_Pt_80_120_5362_HI_2024/GEN-SIM-RECO/141X_mcRun3_2024_realistic_HI_v5_STD_RegeneratedGS_2024HIN_noPU-v1/2580000/d5761040-3e83-4987-8f59-01b1af2f0399.root')
 )
 
 # Pixel, ECAL, ES, HCAL, Strips, Muons, Other
@@ -112,7 +109,8 @@ process.output = cms.OutputModule( "PoolOutputModule", fileName = cms.untracked.
     SelectEvents = cms.untracked.PSet(  SelectEvents = cms.vstring( 'PartialRawRepackers' ) ),
     outputCommands = cms.untracked.vstring( 'drop *',
       'keep FEDRawDataCollection_*_*_*',
-      'keep *_siPixelDigis_*_*')
+      'keep *DigiSim*_*_*_*',
+      'keep *_*Digis_*_*')
 )
 
 process.load('Configuration.StandardSequences.RawToDigi_Data_cff')
