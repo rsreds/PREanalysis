@@ -8,7 +8,7 @@ def FEDinclude(dname):
         listofarray = FEDlist['BPIX+'] + FEDlist['BPIX-'] + FEDlist['FPIX+'] + FEDlist['FPIX-']
         
     elif dname == 'ECAL':
-        listofarray =  FEDlist['EE-'] + FEDlist['ES+'] + FEDlist['ES-'] + FEDlist['EB+'] + FEDlist['EB-'] + FEDlist['EE+']
+        listofarray =  FEDlist['EE-'] + FEDlist['EB+'] + FEDlist['EB-'] + FEDlist['EE+']
     elif dname == 'ES':
         listofarray = FEDlist['ES+'] + FEDlist['ES-']
     elif dname == 'HCAL':

@@ -130,6 +130,8 @@ process.RECOoutput = cms.OutputModule("PoolOutputModule",
             'keep *_simEcalDigis_*_*',
             'keep *_simSiStripDigis_*_*',
             'keep *_simSiPixelDigis_*_*',
+            'keep *_simEcalPreshowerDigis_*_*',
+            'keep *_ecalPreshowerDigis_*_*',
             'drop *_*_*_RECO'
       )
     # splitLevel = cms.untracked.int32(0)
