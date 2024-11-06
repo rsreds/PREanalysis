@@ -17,6 +17,7 @@ process.load('Configuration.EventContent.EventContent_cff')
 process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration.StandardSequences.MagneticField_cff')
 process.load('Configuration.StandardSequences.RawToDigi_Data_cff')
+process.load('Configuration.StandardSequences.Reconstruction_Data_cff')
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
@@ -134,22 +135,23 @@ process.RECOoutput = cms.OutputModule("PoolOutputModule",
         dataTier = cms.untracked.string('DIGI'),
         filterName = cms.untracked.string('')
     ),
-    fileName = cms.untracked.string('step3_RAW2DIGI_partialRAW.root'),
+    fileName = cms.untracked.string('step3_RAW2DIGI_partialRAW_RECO.root'),
     SelectEvents = cms.untracked.PSet(  SelectEvents = cms.vstring( 'partialrawrepackers_step' ) ),
     outputCommands = cms.untracked.vstring(
-            'drop *',
-            'keep FEDRawDataCollection_*_*_*',
-            'keep *_siStripDigis_*_*',
-            'keep *_siPixelDigis_*_*',
-            'keep *_ecalDigis_*_*',
-            'keep *_hcalDigis_*_*',
-            'keep *_simHcalDigis_*_*',
-            'keep *_simEcalDigis_*_*',
-            'keep *_simSiStripDigis_*_*',
-            'keep *_simSiPixelDigis_*_*',
-            'keep *_simEcalPreshowerDigis_*_*',
-            'keep *_ecalPreshowerDigis_*_*',
-            'drop *_*_*_RECO'
+        'keep *'
+            # 'drop *',
+            # 'keep FEDRawDataCollection_*_*_*',
+            # 'keep *_siStripDigis_*_*',
+            # 'keep *_siPixelDigis_*_*',
+            # 'keep *_ecalDigis_*_*',
+            # 'keep *_hcalDigis_*_*',
+            # 'keep *_simHcalDigis_*_*',
+            # 'keep *_simEcalDigis_*_*',
+            # 'keep *_simSiStripDigis_*_*',
+            # 'keep *_simSiPixelDigis_*_*',
+            # 'keep *_simEcalPreshowerDigis_*_*',
+            # 'keep *_ecalPreshowerDigis_*_*',
+            # 'drop *_*_*_RECO'
       )
     # splitLevel = cms.untracked.int32(0)
 )
@@ -158,10 +160,11 @@ process.RECOoutput = cms.OutputModule("PoolOutputModule",
 
 # Other statements
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, globaltag = '141X_mcRun3_2024_realistic_HI_v5')
+process.GlobalTag = GlobalTag(process.GlobalTag, globaltag = '140X_mcRun3_2024_realistic_v21')
 
 # Path and EndPath definitions
 process.raw2digi_step = cms.Path(process.RawToDigi)
+process.reconstruction_step = cms.Path(process.reconstruction)
 process.partialrawrepackers_step = cms.Path(process.partialRawDataRepackerPixel 
                                        + process.partialRawDataRepackerECAL
                                        + process.partialRawDataRepackerES 
@@ -173,7 +176,7 @@ process.endjob_step = cms.EndPath(process.endOfProcess)
 process.output_step = cms.EndPath(process.RECOoutput)
 
 # Schedule definition
-process.schedule = cms.Schedule(process.raw2digi_step,process.partialrawrepackers_step,process.endjob_step,process.output_step)
+process.schedule = cms.Schedule(process.raw2digi_step,process.reconstruction_step,process.partialrawrepackers_step,process.endjob_step,process.output_step)
 from PhysicsTools.PatAlgos.tools.helpers import associatePatAlgosToolsTask
 associatePatAlgosToolsTask(process)
 
@@ -189,6 +192,10 @@ process = customisePostEra_Run3(process)
 
 
 # Customisation from command line
+
+#Have logErrorHarvester wait for the same EDProducers to finish as those providing data for the OutputModule
+from FWCore.Modules.logErrorHarvester_cff import customiseLogErrorHarvesterUsingOutputCommands
+process = customiseLogErrorHarvesterUsingOutputCommands(process)
 
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
