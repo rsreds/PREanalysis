@@ -25,30 +25,26 @@ process.maxEvents = cms.untracked.PSet(
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
-# Input source
+# # Input source with PU
+# process.source = cms.Source("PoolSource",
+#     secondaryFileNames = cms.untracked.vstring(
+#     '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/b20570d9-b5e4-4e16-a6a5-c5a7eb7f426d.root'
+# ),
+#     fileNames = cms.untracked.vstring(
+#     '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/1e4e0463-6540-4868-8941-bba8e9f53129.root',
+# )
+# )
+
+# Input source without PU
 process.source = cms.Source("PoolSource",
     secondaryFileNames = cms.untracked.vstring(
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/12159f21-4931-4490-a9b7-6c9b9f0cbb70.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/7b721acf-91d2-479c-94a2-ada037435e6d.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/95f9925a-d7f9-4d35-8b27-6e435f46512f.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/e9c05c18-6f04-4da8-8831-6cc727eecad5.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/40272785-46dd-4863-b7c3-0583bcf438c1.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/8a92c9c0-21ff-4141-ad53-454dfe88b008.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/97822ade-c230-4023-84f3-1581d20a565c.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/efd7b1e9-30aa-432e-bda0-d3a5e7d9cac9.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/44bbf957-4bd7-4491-8b4c-c5e849f0b1bb.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/956a3184-ee77-4fb8-b941-55ac1efcc077.root',
-'/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/b20570d9-b5e4-4e16-a6a5-c5a7eb7f426d.root'
+    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/1e0a12d5-6b27-445e-acce-7d13feb2c276.root',
+    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/3c827803-0b40-46b9-81c4-3a06753f96e5.root',
+    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/53083372-757d-4d04-81a4-875269adc0fe.root',
+    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/58a68670-84c5-4aed-9dad-47c09623066f.root'
 ),
-    fileNames = cms.untracked.vstring('/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/1e4e0463-6540-4868-8941-bba8e9f53129.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/8192a4a5-5703-4300-87c8-b4777478b6bc.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/a9ec961c-5bff-4023-a80a-728454d96abc.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/3c1e9bba-59d3-44b6-ad73-320ca3aaf0d0.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/84691d05-8baf-49d2-a875-f4c78d0f2431.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/aec76d64-8baa-42db-8a09-aa75d304c1e6.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/5d9c5dfc-490c-4875-a2a3-b043081d82ed.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/9069d3ba-a48b-4c59-ad69-4e1dbf10fd86.root',
-# '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/f1b8683c-123e-4f36-9dc8-f55e9f94ad62.root'
+    fileNames = cms.untracked.vstring(
+    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/19b2cbe8-4c79-4ae8-95af-ae9a3f4fc121.root',
 )
 )
 
@@ -135,7 +131,7 @@ process.RECOoutput = cms.OutputModule("PoolOutputModule",
         dataTier = cms.untracked.string('DIGI'),
         filterName = cms.untracked.string('')
     ),
-    fileName = cms.untracked.string('step3_RAW2DIGI_partialRAW.root'),
+    fileName = cms.untracked.string('run3_partialRAW_DIGI_RECO_noPU.root'),
     SelectEvents = cms.untracked.PSet(  SelectEvents = cms.vstring( 'partialrawrepackers_step' ) ),
     outputCommands = cms.untracked.vstring(
             'drop *',
