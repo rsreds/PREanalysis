@@ -25,28 +25,28 @@ process.maxEvents = cms.untracked.PSet(
     output = cms.optional.untracked.allowed(cms.int32,cms.PSet)
 )
 
-# # Input source with PU
-# process.source = cms.Source("PoolSource",
-#     secondaryFileNames = cms.untracked.vstring(
-#     '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/b20570d9-b5e4-4e16-a6a5-c5a7eb7f426d.root'
-# ),
-#     fileNames = cms.untracked.vstring(
-#     '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/1e4e0463-6540-4868-8941-bba8e9f53129.root',
-# )
-# )
-
-# Input source without PU
+# Input source with PU
 process.source = cms.Source("PoolSource",
     secondaryFileNames = cms.untracked.vstring(
-    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/1e0a12d5-6b27-445e-acce-7d13feb2c276.root',
-    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/3c827803-0b40-46b9-81c4-3a06753f96e5.root',
-    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/53083372-757d-4d04-81a4-875269adc0fe.root',
-    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/58a68670-84c5-4aed-9dad-47c09623066f.root'
+    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/b20570d9-b5e4-4e16-a6a5-c5a7eb7f426d.root'
 ),
     fileNames = cms.untracked.vstring(
-    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/19b2cbe8-4c79-4ae8-95af-ae9a3f4fc121.root',
+    '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/PU_140X_mcRun3_2024_realistic_v21_STD_2024_PU-v3/2590000/1e4e0463-6540-4868-8941-bba8e9f53129.root',
 )
 )
+
+# # Input source without PU
+# process.source = cms.Source("PoolSource",
+#     secondaryFileNames = cms.untracked.vstring(
+#     '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/1e0a12d5-6b27-445e-acce-7d13feb2c276.root',
+#     '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/3c827803-0b40-46b9-81c4-3a06753f96e5.root',
+#     '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/53083372-757d-4d04-81a4-875269adc0fe.root',
+#     '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/58a68670-84c5-4aed-9dad-47c09623066f.root'
+# ),
+#     fileNames = cms.untracked.vstring(
+#     '/store/relval/CMSSW_14_2_0_pre1/RelValTTbar_14TeV/GEN-SIM-RECO/140X_mcRun3_2024_realistic_v21_STD_RegeneratedGS_2024_noPU-v1/2580000/19b2cbe8-4c79-4ae8-95af-ae9a3f4fc121.root',
+# )
+# )
 
 process.options = cms.untracked.PSet(
     IgnoreCompletely = cms.untracked.vstring(),
@@ -131,7 +131,7 @@ process.RECOoutput = cms.OutputModule("PoolOutputModule",
         dataTier = cms.untracked.string('DIGI'),
         filterName = cms.untracked.string('')
     ),
-    fileName = cms.untracked.string('run3_partialRAW_DIGI_RECO_noPU.root'),
+    fileName = cms.untracked.string('run3_partialRAW_DIGI_RECO_PU.root'),
     SelectEvents = cms.untracked.PSet(  SelectEvents = cms.vstring( 'partialrawrepackers_step' ) ),
     outputCommands = cms.untracked.vstring(
             'drop *',
@@ -211,5 +211,9 @@ process.RECOoutput.outputCommands.extend([
     'keep *_siStripClusters_*_*',
     'keep *_siPixelRecHits_*_*',
     'keep *_siStripMatchedRecHits_*_*',
-    'keep *_generalTracks_*_*'
-])
+    'keep *_generalTracks_*_*',
+    'keep *_*recHit*_*_*',
+    'keep *_*RecHit*_*_*',
+    'keep *_*Cluster*_*_*'
+    ])
+
